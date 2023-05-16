@@ -1,0 +1,48 @@
+@startuml
+
+skinparam componentStyle uml1
+
+component neurone_services {
+    component SecurityAPI
+    component SecurityServices
+    component SecurityRepository
+    component AdminAPI
+    component AdminServices
+    component AdminRepository
+    component UserAPI
+    component UserServices
+    component UserRepository
+    component AuditService
+    component AuditRepository
+    component NotificationServices
+    component EmailManager
+}
+
+database MongoDB
+
+SecurityAPI -down-> SecurityServices
+SecurityServices -down-> SecurityRepository
+SecurityRepository ...> MongoDB
+
+AdminAPI -down-> AdminServices
+AdminServices -down-> AdminRepository
+AdminRepository ...> MongoDB
+
+UserAPI -down-> UserServices
+UserServices -down-> UserRepository
+UserRepository ...> MongoDB
+
+AuditService -down-> AuditRepository
+AuditRepository ..> MongoDB
+
+UserServices --> AuditService
+AdminServices --> AuditService
+SecurityServices --> AuditService
+
+NotificationServices -down-> EmailManager
+
+UserServices --> NotificationServices
+AdminServices --> NotificationServices
+SecurityServices --> NotificationServices
+
+@enduml

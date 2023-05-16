@@ -1,0 +1,47 @@
+@startuml
+component Spring{
+    component AuthController
+    component AuthService
+    component AuthRepository
+}
+
+component Message{
+    component MessageController
+    component MessageService
+    component MessagePublisher
+}
+
+component MessageSave{
+    component MessageConsumer
+    component MessageService
+    component MessageRepository
+}
+
+
+component Kafka{
+    interface publisher
+    interface consumer
+}
+
+
+
+database AuthDB
+database MessageDB
+
+
+AuthController -down-> AuthService
+AuthService -down-> AuthRepository
+AuthRepository ...> AuthDB
+
+MessageController -down-> MessageService
+MessageService -down-> MessagePublisher
+MessagePublisher --> http1 : use
+
+http1 -down-> Kafka
+[Kafka] -down-> http
+
+http -down-> MessageConsumer
+MessageConsumer -right-> MessageRepository
+MessageRepository -down-> MessageDB
+
+@enduml

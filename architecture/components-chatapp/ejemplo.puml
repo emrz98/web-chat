@@ -1,0 +1,18 @@
+@startuml
+@startuml
+left to right direction
+
+package Tienda {
+  component "Inventario" {
+    port "GestorInventario" as gestor
+  }
+
+  component "Ventas" {
+    port "ProcesadorVentas" as procesador
+  }
+
+  gestor --> procesador : "Actualización de stock"
+}
+@enduml
+
+@enduml

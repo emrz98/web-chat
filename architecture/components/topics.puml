@@ -1,0 +1,41 @@
+@startuml
+component neurone_services {
+    component DatasourceAPI
+    component DatasourceServices
+    component DatasourceRepository
+    component TopicAPI
+    component ConfluenceConnector #lightyellow
+    component TopicServices
+    component TopicRepository
+    component LLMServices #lightblue
+    component VectorRepository #lightblue
+    component LangChain #lightblue
+}
+
+database MongoDB
+database VectorDatabase
+cloud Confluence #lightyellow
+cloud OpenAPI
+cloud HuggingFace
+
+DatasourceAPI -down-> DatasourceServices
+DatasourceServices --> DatasourceRepository
+DatasourceRepository ..> MongoDB
+
+TopicAPI --> TopicServices
+TopicServices --> TopicRepository
+TopicRepository --> MongoDB
+VectorRepository ..> VectorDatabase
+
+TopicServices -> LLMServices
+TopicServices --> ConfluenceConnector
+ConfluenceConnector --> Confluence
+LLMServices --> VectorRepository
+LLMServices --> LangChain
+
+LangChain --> OpenAPI
+LangChain --> HuggingFace
+
+@enduml
+
+@enduml

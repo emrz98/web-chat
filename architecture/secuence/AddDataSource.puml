@@ -1,0 +1,18 @@
+@startuml
+autonumber
+
+actor UI
+
+participant DatasourceAPI
+participant DatasourceService
+entity ConfluenceDatasourceConfiguration
+participant DatasourceRepository
+database MongoDB
+
+UI -> DatasourceAPI : add_datasource(user, type, configuration)
+DatasourceAPI -> DatasourceService: add_datasource(user, type, configuration)
+DatasourceService -> ConfluenceDatasourceConfiguration: new (configuration)
+ConfluenceDatasourceConfiguration --> DatasourceService: confluence_configuration
+DatasourceService -> DatasourceRepository: add_datasource(user_id, type, confluence_configuration)
+DatasourceRepository -> MongoDB: insert(user_id, type, confluence_configuration)
+@enduml

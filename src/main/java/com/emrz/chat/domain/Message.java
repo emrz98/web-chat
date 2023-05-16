@@ -2,21 +2,19 @@ package com.emrz.chat.domain;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.ManyToMany;
+import javax.persistence.*;
 
 @Entity
 public class Message {
 
+    @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @ManyToMany
+    @ManyToOne
     private User UserFrom;
 
-    @ManyToMany
+    @ManyToOne
     private User UserTo;
 
     private String message;
